@@ -1,0 +1,98 @@
+#pgzero
+WIDTH = 1000
+HEIGHT = 300
+FPS = 30
+TITLE = "the explorers ship - update: 0.3.6 (started better)"
+
+count = 0
+
+theship = Actor("ship", (70, 100), size = (40, 40))
+background = Actor("space", size = (1000, 300))
+theasteroid = Actor("asteroid", (400, 80), size = (90, 90))
+theasteroid2 = Actor("asteroid2", (1000, 210), size = (80, 80))
+theasteroid3 = Actor("asteroid3", (1800, 100), size = (80, 80))
+theasteroid4 = Actor("asteroid4", (2300, 200), size = (90, 90))
+theasteroid5 = Actor("asteroid5", (3000, 100), size = (90, 90))
+theasteroid6 = Actor("asteroid6", (3900, 230), size = (90, 90))
+theplanet = Actor("planet", (800, 150), size = (200, 200))
+coinbooster = Actor("coin", (1400, 120), size = (30, 30))
+speedboostertrap = Actor("speedbooster", (700, 70), size = (60, 60))
+fasttrap = Actor("fast", (1100, 210), size = (90, 50))
+fireee = Actor("fire", (70, 100), size = (30, 30))
+
+def draw():
+    global count
+    global background
+    if theasteroid6.x <= -10:
+        screen.draw.text("your final score is:", center = (400, 100), fontsize = 75)
+        background = Actor("space", size = (10, 10))
+        if count >= 75:
+            screen.draw.text("PERFECT SCORE, NO RECLAMAR", center = (400, 200), color = "green", fontsize = 35)
+    background.draw()
+    theship.draw()
+    theplanet.draw()
+    theasteroid.draw()
+    theasteroid2.draw()
+    theasteroid3.draw()
+    theasteroid4.draw()
+    theasteroid5.draw()
+    theasteroid6.draw()
+    coinbooster.draw()
+    speedboostertrap.draw()
+    fasttrap.draw()
+    screen.draw.text(count, center = (1000, 250), fontsize = 40)
+    if theship.colliderect(theasteroid) or theship.colliderect(theasteroid2) or theship.colliderect(theasteroid3) or theship.colliderect(theasteroid4) or theship.colliderect(theasteroid5) or theship.colliderect(theasteroid6):
+        screen.draw.text("YOURE IN AN ASTEROID", center = (400, 100), fontsize = 50)
+        fireee.pos = theship.pos
+        fireee.draw()
+        count -= 1
+    if theship.colliderect(coinbooster):
+        screen.draw.text("COIN BOOSTER TAKED (5+ score)", center = (400, 200), color = "yellow", fontsize = 30)
+        count += 5
+    if theship.colliderect(speedboostertrap):
+        screen.draw.text("speed 0.0001 lol", center = (400, 250), fontsize = 10)
+        animate(theasteroid, duration=32, x = -30)
+        animate(theasteroid2, duration=43, x = -40)
+        animate(theasteroid3, duration=59, x = -50)
+        animate(theasteroid4, duration=67, x = -50)
+        animate(theasteroid5, duration=76, x = -70)
+        animate(theasteroid6, duration=88, x = -80)
+        animate(coinbooster, duration=0.1, x = -30)
+        animate(speedboostertrap, duration=29, x = -15)
+        animate(fasttrap, duration=6262, x = -6)
+        if keyboard.down:
+            animate(theship, duration=5, y = 250)
+        if keyboard.up:
+            animate(theship, duration=5, y = 50)
+    if theship.colliderect(fasttrap):
+        animate(theasteroid, duration=0.1, x = -30)
+        animate(theasteroid2, duration=0.3, x = -40)
+        animate(theasteroid3, duration=1, x = -50)
+        animate(theasteroid4, duration=1.1, x = -50)
+        animate(theasteroid5, duration=1.5, x = -70)
+        animate(theasteroid6, duration=2, x = -80)
+        animate(coinbooster, duration=0.2, x = -30)
+        animate(speedboostertrap, duration=0.6, x = -15)
+        animate(fasttrap, duration=1.5, x = -6)
+        
+def on_key_down(key):
+    if keyboard.down:
+        animate(theship, duration=0.5, y = 250)
+    if keyboard.up:
+        animate(theship, duration=0.5, y = 50)
+
+def update(dt):
+    global count
+    if theship.colliderect(background):
+        count += 0.1
+    animate(theasteroid, duration=1.5, x = -30)
+    animate(theasteroid2, duration=2.75, x = -40)
+    animate(theasteroid3, duration=4, x = -50)
+    animate(theasteroid4, duration=6, x = -50)
+    animate(theasteroid5, duration=8.5, x = -70)
+    animate(theasteroid6, duration=11, x = -80)
+    animate(coinbooster, duration=3, x = -30)
+    animate(speedboostertrap, duration=5, x = -15)
+    animate(fasttrap, duration=6, x = -6)
+    
+    
